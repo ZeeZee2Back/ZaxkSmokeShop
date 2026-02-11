@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZACKSMOKES - Premium Online Dispensary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* Age Verification Modal */
+        #age-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .age-content {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .age-content h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        .age-content p {
+            margin-bottom: 30px;
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .age-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .age-btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .age-yes {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .age-yes:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .age-no {
+            background: #f44336;
+            color: white;
+        }
+
+        .age-no:hover {
+            background: #da190b;
+        }
+
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(76, 175, 80, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4CAF50;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5em;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .cart-icon:hover {
+            background: #45a049;
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(76, 175, 80, 0.6);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #f44336;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        /* Banner */
+        .banner {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23111" width="1200" height="400"/></svg>');
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #4CAF50;
+            position: relative;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(76, 175, 80, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .banner h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.6);
+            position: relative;
+        }
+
+        .banner p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            background: rgba(30, 30, 30, 0.8);
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: #4CAF50;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+            border-color: #4CAF50;
+        }
+
+        .tab-btn.active {
+            background: #4CAF50;
+            color: white;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+            border-color: #4CAF50;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+            position: relative;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 35px rgba(76, 175, 80, 0.3);
+            border-color: #4CAF50;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: rgba(40, 40, 40, 0.8);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 3em;
+            color: rgba(76, 175, 80, 0.3);
+            border: 2px solid rgba(76, 175, 80, 0.1);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .product-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #fff;
+            min-height: 50px;
+        }
+
+        .product-prices {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1em;
+        }
+
+        .current-price {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .stock-status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .in-stock {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .sold-out {
+            background: #f44336;
+            color: white;
+        }
+
+        .flavor-select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            border-radius: 8px;
+            font-size: 1em;
+            background: rgba(30, 30, 30, 0.9);
+            color: #fff;
+        }
+
+        .flavor-select option {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .add-to-cart-btn:hover:not(:disabled) {
+            background: #45a049;
+            transform: scale(1.02);
+            box-shadow: 0 5px 25px rgba(76, 175, 80, 0.5);
+        }
+
+        .add-to-cart-btn:disabled {
+            background: rgba(100, 100, 100, 0.5);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100%;
+            background: rgba(15, 15, 15, 0.98);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+            transition: right 0.3s;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            border-left: 2px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 20px;
+            background: #4CAF50;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+        }
+
+        .cart-header h2 {
+            font-size: 1.5em;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .cart-item {
+            background: rgba(30, 30, 30, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .cart-item-price {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .cart-item-flavor {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quantity-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s;
+        }
+
+        .qty-btn:hover {
+            background: #45a049;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .remove-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-footer {
+            padding: 20px;
+            border-top: 2px solid rgba(76, 175, 80, 0.3);
+            background: rgba(10, 10, 10, 0.95);
+        }
+
+        .cart-total {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .shipping-note {
+            font-size: 0.9em;
+            color: #ffd700;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 5px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .checkout-btn:hover {
+            background: #45a049;
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(76, 175, 80, 0.6);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px 20px;
+            color: #888;
+        }
+
+        .coming-soon {
+            text-align: center;
+            padding: 100px 20px;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .coming-soon h2 {
+            font-size: 3em;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+        }
+
+        .coming-soon p {
+            font-size: 1.3em;
+            color: #aaa;
+        }
+
+        .contact-box {
+            background: rgba(20, 20, 20, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .contact-box .box-emoji {
+            font-size: 5em;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(76, 175, 80, 0.3));
+        }
+
+        .contact-box h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+
+        .contact-box p {
+            font-size: 1.2em;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .telegram-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #0088cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.3s;
+        }
+
+        .telegram-btn:hover {
+            background: #006699;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .age-content {
+                padding: 30px;
+            }
+
+            .age-content h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Age Verification Modal -->
+    <div id="age-modal">
+        <div class="age-content">
+            <h1>🔞 Age Verification</h1>
+            <p>You must be 21 years or older to enter this site.</p>
+            <p>Are you 21 or older?</p>
+            <div class="age-buttons">
+                <button class="age-btn age-yes" onclick="verifyAge(true)">YES</button>
+                <button class="age-btn age-no" onclick="verifyAge(false)">NO</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">🌿 ZACKSMOKES</a>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒 Cart
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner -->
+    <div class="banner">
+        <h2>🚀 ZACKSMOKES - Your #1 Online Dispensary</h2>
+        <p>Legal Products • Ships All 50 States • Delivered to Your Door</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('nicotine')">Nicotine</button>
+            <button class="tab-btn" onclick="showTab('hemp')">Hemp</button>
+            <button class="tab-btn" onclick="showTab('10pcs')">10 PCS</button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Nicotine Tab -->
+        <div id="nicotine" class="tab-content active">
+            <nav style="margin-bottom: 20px;">
+                <div class="nav-tabs">
+                    <button class="tab-btn active" onclick="showNicotineSubTab('disposables')">Disposables</button>
+                </div>
+            </nav>
+            
+            <div id="nicotine-disposables" class="nicotine-subtab active">
+                <div class="products-grid" id="nicotine-products"></div>
+            </div>
+        </div>
+
+        <!-- Hemp Tab -->
+        <div id="hemp" class="tab-content">
+            <nav style="margin-bottom: 20px;">
+                <div class="nav-tabs">
+                    <button class="tab-btn active" onclick="showHempSubTab('disposables')">Disposables</button>
+                    <button class="tab-btn" onclick="showHempSubTab('flower')">Flower</button>
+                    <button class="tab-btn" onclick="showHempSubTab('concentrates')">Concentrates</button>
+                    <button class="tab-btn" onclick="showHempSubTab('edibles')">Edibles</button>
+                </div>
+            </nav>
+            
+            <div id="disposables" class="hemp-subtab active">
+                <div class="products-grid" id="disposables-products"></div>
+            </div>
+            
+            <div id="flower" class="hemp-subtab" style="display: none;">
+                <div class="products-grid" id="flower-products"></div>
+            </div>
+            
+            <div id="concentrates" class="hemp-subtab" style="display: none;">
+                <div class="coming-soon">
+                    <h2>🔜 Coming Soon</h2>
+                    <p>Our premium concentrates will be available soon!</p>
+                </div>
+            </div>
+            
+            <div id="edibles" class="hemp-subtab" style="display: none;">
+                <div class="coming-soon">
+                    <h2>🔜 Coming Soon</h2>
+                    <p>Our delicious edibles collection will be available soon!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 PCS Tab -->
+        <div id="10pcs" class="tab-content">
+            <div class="contact-box">
+                <div class="box-emoji">📦</div>
+                <h2>Custom 10 Piece Orders</h2>
+                <p>Looking to order 10 pieces or more? Get special bulk pricing!</p>
+                <p>Contact us on Telegram for custom 10pc orders and wholesale pricing.</p>
+                <a href="https://t.me/ZACKSMOKES" class="telegram-btn" target="_blank">Contact on Telegram</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">✕</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="empty-cart">
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display: none;">
+            <div class="shipping-note">
+                ⚠️ Shipping: $5-$15 (calculated at checkout)
+            </div>
+            <div class="cart-total">
+                Total: $<span id="cart-total">0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Telegram Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        // Product Data
+        const nicotineProducts = [
+            {
+                name: 'GEEK BAR PULSE X 25K DISPOSABLE',
+                price: 27.99,
+                originalPrice: 32.99,
+                stock: false,
+                image: 'geekbar-pulse-x-25k.png'
+            },
+            {
+                name: 'GEEK BAR PULSE 15000 DISPOSABLE',
+                price: 25.99,
+                originalPrice: 30.99,
+                stock: false,
+                image: 'geekbar-pulse-15k.png'
+            },
+            {
+                name: 'RAZ DC25000 DISPOSABLE VAPE',
+                price: 24.99,
+                originalPrice: 29.99,
+                stock: false,
+                image: 'raz-dc25000.png'
+            },
+            {
+                name: 'Foger Switch Pro Kit | 30K',
+                price: 27.99,
+                originalPrice: 32.99,
+                stock: false,
+                image: 'foger-switch-pro-30k.png'
+            },
+            {
+                name: 'Lost Mary Turbo 35k',
+                price: 19.99,
+                originalPrice: 24.99,
+                stock: false,
+                image: 'lost-mary-turbo-35k.png'
+            }
+        ];
+
+        const flowerProducts = [
+            {
+                name: 'Zour Stash THCA Zour Rocks | 3.5g',
+                price: 19.99,
+                originalPrice: 24.99,
+                stock: false,
+                image: 'zour-stash-3.5g.png'
+            },
+            {
+                name: 'Indoor Exotics - Purple Jack - 28 Grams - Hybrid',
+                price: 135.99,
+                originalPrice: 140.99,
+                stock: false,
+                image: 'purple-jack-28g.png'
+            },
+            {
+                name: 'Muha Meds Premium THCa Flower Jar 4g',
+                price: 26.99,
+                originalPrice: 31.99,
+                stock: false,
+                image: 'muhameds-flower-4g.png'
+            }
+        ];
+
+        const disposablesProducts = [
+            {
+                name: 'Boutiq Switch Glow Triple Tank All-in-One Vape',
+                price: 37.99,
+                originalPrice: 42.99,
+                stock: true,
+                image: 'boutiq-switch-glow.png',
+                flavors: [
+                    'ARCTIC FROST X ROCKET POP X TROPIC HAZE',
+                    'BLUE MATCHA X ACAI BERRY X SOUR SLUSH',
+                    'CHERRY LIME X CRUNCH BERRY X ORANGE MOCHI',
+                    'GRAPE SODA X GLOWBERRY X CHERRY PIE',
+                    'ITALIAN ICE X LEMON CHERRY X Z-RUNTZ',
+                    'LIME HAZE X SLIMEADE X STARFRUIT',
+                    'MAUI WOWIE X GELATO 41 X MANGO MELON',
+                    'PINK-Z X DRAGON FRUIT X TROPICANA',
+                    'PURPLE PAPAYA X BLUE BERRIEZ X RZ-11',
+                    'SOUR TANGIE X NYC SOUR X PASSION FRUIT'
+                ]
+            },
+            {
+                name: 'Muha Meds Gen 3 Disposable',
+                price: 38.99,
+                originalPrice: 43.99,
+                stock: true,
+                image: 'muhameds-gen3.png',
+                flavors: [
+                    'HORCHATA',
+                    'BLUE SLUSHIE',
+                    'SWEET DREAMS OG',
+                    'WATERMELON MOONSHINE',
+                    'GALATIC DISEL',
+                    'DRAGON BERRY RUNTZ',
+                    'PINEAPPLE EXPRESS',
+                    'FROZEN POMEGRANTE',
+                    'HABIBI',
+                    'BUBBLEGUM BURST',
+                    'RUSSIAN CREAM',
+                    'BLUE ZUSHII',
+                    'KEY LIME PIE',
+                    'SOUR YUZU PEAR',
+                    'SUGAR PLUM OG'
+                ]
+            },
+            {
+                name: 'Blinkers Flip THC-A Disposable | 2g',
+                price: 32.99,
+                originalPrice: 37.99,
+                stock: true,
+                image: 'blinkers-flip-2g.png',
+                flavors: [
+                    'GREEN APPLE X BLUE NERDZ',
+                    'GUSHERS X BANANA MOCHI',
+                    'MANGO TANGO X LEMON HEADS',
+                    'TROPICAL GRAPE X MELON BURST',
+                    'WATERMELON Z X LEMON CHERRY GELATO'
+                ]
+            },
+            {
+                name: 'Based Live Rosin THC-P Disposable | 2g',
+                price: 26,
+                originalPrice: 31,
+                stock: true,
+                image: 'based-live-rosin-2g.png',
+                flavors: [
+                    'APPLE BETTY',
+                    'HULK BERRY',
+                    'STRAWBERRY FLOAT'
+                ]
+            },
+            {
+                name: 'Nomad LA THC-A Live Rosin Disposable | 2g',
+                price: 18,
+                originalPrice: 23,
+                stock: true,
+                image: 'nomad-la-2g.png',
+                flavors: [
+                    'DEATH STAR',
+                    'MANGO KUSH',
+                    'BLUE MOON',
+                    'BUBBA\'S GIRL',
+                    'RAINBOW KUSH'
+                ]
+            }
+        ];
+
+        // Cart Management
+        let cart = JSON.parse(localStorage.getItem('zacksmokes_cart')) || [];
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        function saveCart() {
+            localStorage.setItem('zacksmokes_cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+        }
+
+        function addToCart(product, flavor = null) {
+            const existingItem = cart.find(item => 
+                item.name === product.name && item.flavor === flavor
+            );
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({
+                    name: product.name,
+                    price: product.price,
+                    flavor: flavor,
+                    quantity: 1
+                });
+            }
+
+            saveCart();
+            alert('Added to cart!');
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+        }
+
+        function updateQuantity(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) {
+                removeFromCart(index);
+            } else {
+                saveCart();
+            }
+        }
+
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartFooter = document.getElementById('cart-footer');
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="empty-cart"><p>Your cart is empty</p></div>';
+                cartFooter.style.display = 'none';
+                return;
+            }
+
+            cartFooter.style.display = 'block';
+
+            let html = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-header">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                        </div>
+                        ${item.flavor ? `<div class="cart-item-flavor">${item.flavor}</div>` : ''}
+                        <div class="cart-item-actions">
+                            <div class="quantity-controls">
+                                <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cartItemsContainer.innerHTML = html;
+            document.getElementById('cart-total').textContent = total.toFixed(2);
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('open');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            let message = '🛒 *ZACKSMOKES ORDER*%0A%0A';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                message += `${item.quantity}x ${item.name}`;
+                if (item.flavor) {
+                    message += ` - ${item.flavor}`;
+                }
+                message += ` - $${itemTotal.toFixed(2)}%0A`;
+            });
+
+            message += `%0A*Subtotal: $${total.toFixed(2)}*%0A`;
+            message += `*Shipping: $5-$15*%0A%0A`;
+            message += 'Ready to complete this order!';
+
+            window.open(`https://t.me/ZACKSMOKES?text=${message}`, '_blank');
+        }
+
+        // Render Products
+        function renderProducts(products, containerId, hasOptions = false) {
+            const container = document.getElementById(containerId);
+            let html = '';
+
+            products.forEach(product => {
+                html += `
+                    <div class="product-card">
+                        <div class="discount-badge">$5 OFF</div>
+                        <div class="product-image">
+                            📦
+                            <!-- Image placeholder: ${product.image} -->
+                        </div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-prices">
+                            <span class="original-price">$${product.originalPrice.toFixed(2)}</span>
+                            <span class="current-price">$${product.price.toFixed(2)}</span>
+                        </div>
+                        <div class="stock-status ${product.stock ? 'in-stock' : 'sold-out'}">
+                            ${product.stock ? 'IN STOCK' : 'SOLD OUT'}
+                        </div>
+                        ${hasOptions && product.flavors ? `
+                            <select class="flavor-select" id="flavor-${product.name.replace(/\s+/g, '-')}">
+                                <option value="">Select Flavor</option>
+                                ${product.flavors.map(f => `<option value="${f}">${f}</option>`).join('')}
+                            </select>
+                        ` : ''}
+                        <button class="add-to-cart-btn" 
+                                ${!product.stock ? 'disabled' : ''}
+                                onclick='addToCartHandler(${JSON.stringify(product)}, ${hasOptions})'>
+                            ${product.stock ? 'Add to Cart' : 'Out of Stock'}
+                        </button>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function addToCartHandler(product, hasOptions) {
+            if (hasOptions && product.flavors) {
+                const flavorSelect = document.getElementById(`flavor-${product.name.replace(/\s+/g, '-')}`);
+                const flavor = flavorSelect.value;
+                if (!flavor) {
+                    alert('Please select a flavor!');
+                    return;
+                }
+                addToCart(product, flavor);
+            } else {
+                addToCart(product);
+            }
+        }
+
+        // Tab Management
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function showNicotineSubTab(tabName) {
+            document.querySelectorAll('.nicotine-subtab').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            document.getElementById('nicotine-' + tabName).style.display = 'block';
+
+            const buttons = document.querySelectorAll('#nicotine .tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function showHempSubTab(tabName) {
+            document.querySelectorAll('.hemp-subtab').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            document.getElementById(tabName).style.display = 'block';
+
+            const buttons = document.querySelectorAll('#hemp .tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Age Verification
+        function verifyAge(isOldEnough) {
+            if (isOldEnough) {
+                document.getElementById('age-modal').style.display = 'none';
+                localStorage.setItem('age_verified', 'true');
+            } else {
+                alert('You must be 21 or older to access this site.');
+                window.location.href = 'https://www.google.com';
+            }
+        }
+
+        // Initialize
+        window.onload = function() {
+            // Check age verification
+            if (localStorage.getItem('age_verified') === 'true') {
+                document.getElementById('age-modal').style.display = 'none';
+            }
+
+            // Render all products
+            renderProducts(nicotineProducts, 'nicotine-products', false);
+            renderProducts(flowerProducts, 'flower-products', false);
+            renderProducts(disposablesProducts, 'disposables-products', true);
+
+            // Update cart
+            updateCartCount();
+            renderCart();
+        };
+    </script>
+</body>
+</html>
